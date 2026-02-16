@@ -4,13 +4,13 @@ server:
 spring:
   application:
     name: business-service
-  
+
   datasource:
     url: jdbc:postgresql://localhost:5434/business_db
-    username: business_user
-    password: business_password123
+    username: postgres
+    password: postgres
     driver-class-name: org.postgresql.Driver
-  
+
   jpa:
     hibernate:
       ddl-auto: update
@@ -23,4 +23,3 @@ spring:
 logging:
   level:
     com.business: DEBUG
-  

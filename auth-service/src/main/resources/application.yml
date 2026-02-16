@@ -4,13 +4,13 @@ server:
 spring:
   application:
     name: auth-service
-  
+
   datasource:
     url: jdbc:postgresql://localhost:5432/auth_db
-    username: auth_user
-    password: auth_password123
+    username: postgres
+    password: postgres
     driver-class-name: org.postgresql.Driver
-  
+
   jpa:
     hibernate:
       ddl-auto: update
