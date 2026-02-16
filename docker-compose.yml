@@ -1,6 +1,5 @@
-version: '3.8'
-
 services:
+
   auth-db:
     image: postgres:15-alpine
     container_name: auth-database
@@ -13,7 +12,7 @@ services:
     volumes:
       - auth_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U auth_user -d auth_db"]
+      test: [ "CMD-SHELL", "pg_isready -U auth_user -d auth_db" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -30,10 +29,35 @@ services:
     volumes:
       - business_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U business_user -d business_db"]
+      test: [ "CMD-SHELL", "pg_isready -U business_user -d business_db" ]
       interval: 10s
       timeout: 5s
       retries: 5
+
+  auth-service:
+    build: ./auth-service
+    container_name: auth-service
+    ports:
+      - "8081:8081"
+    depends_on:
+      - auth-db
+
+  business-service:
+    build: ./business-service
+    container_name: business-service
+    ports:
+      - "8082:8082"
+    depends_on:
+      - business-db
+
+  gateway-service:
+    build: ./gateway-service
+    container_name: gateway-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - auth-service
+      - business-service
 
 volumes:
   auth_data:
